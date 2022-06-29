@@ -12,8 +12,8 @@ $route['register'] = 'welcome/register';
 
 // for authorization
 
-$route['authorization/login'] = 'authorization/login';
-$route['authorization/logout'] = 'authorization/logout';
+$route['authorization/register'] = 'authorization/login';
+// $route['authorization/logout'] = 'authorization/logout';
 
 
 $route['404_override'] = '';
