@@ -3,10 +3,23 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Authorization extends CI_Controller {
 
+
+    public function __construct(){
+
+    parent::__construct();
+    $this->load->library('form_validation');
+    $this->load->model('Authorization_model');
+    }
+
+// user login 
+
     public function login()
     {
-        $this->form_validation->set_rules('username','Username','trim|required');
-        $this->form_validation->set_rules('password','Password','trim|required');
+        $this->load->helper('form');
+
+
+        $this->form_validation->set_rules('register_email','Email','trim|required');
+        $this->form_validation->set_rules('register_password','Password','trim|required');
         if ($this->form_validation->run() == FALSE)
         {
             //Load View
@@ -15,12 +28,31 @@ class Authorization extends CI_Controller {
         else
             {
                 //Get From Post
-                $username = $this->input->post('username');
-                $password = $this->input->post('password');
+                $email = $this->input->post('register_email');
+                $password = $this->input->post('register_password');
 
-                //Validate Username & Password
-                $user_id = $this->authenticate_model->login_user($username, $password);
 
+
+                //Convert the details in array to store in table
+
+                $dataArray = array(
+
+                    $data['username'] = $email;
+                    $data['password'] = $password;
+                    $data['created_by'] = '2';
+                    $data['created'] = '2';
+                );
+
+
+
+                $user_id = $this->Authorization_model->login_user($dataArray);
+
+        echo "string";
+        echo "<pre>";
+        // print_r($_POST);
+        print_r($user_id);
+        // print_r($password);
+        die();
                 if($user_id){
                     $user_data = array(
                         'user_id'   => $user_id,
@@ -42,11 +74,11 @@ class Authorization extends CI_Controller {
 
 // user login in project
 
-	public function Login()
-	{
-		echo "string";
-		die();
-	}
+	// public function Logisn()
+	// {
+	// 	echo "string";
+	// 	die();
+	// }
 
 
 // user logout from project
